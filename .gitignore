@@ -160,6 +160,7 @@ typings/
 .dynamodb/
 
 .gitignore
+.idea
 .idea/workspace.xml
 public/images/
 public/javascripts/
