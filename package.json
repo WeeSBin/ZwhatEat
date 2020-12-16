@@ -6,10 +6,12 @@
     "start": "nodemon --watch ./bin/www"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^3.1.5",
     "express": "~4.16.1",
+    "lodash": "^4.17.20",
     "lowdb": "^1.0.0",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.6"
