@@ -6,8 +6,7 @@ var logger = require('morgan');
 /**
  * Router Description
  */
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var integratedRouter = require('./routes/integratedRouter');
 
 var app = express();
 
@@ -29,7 +28,6 @@ app.use(cookieParser());
  * Router Description
  */
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', integratedRouter);
 
 module.exports = app;
