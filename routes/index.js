@@ -1,3 +1,6 @@
+var express = require('express');
+var router = express.Router();
+
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 
@@ -5,10 +8,12 @@ const adapter = new FileSync('db.json');
 const db = low(adapter);
 
 /**
- *  Task
+ * Read
  */
-exports.main = (req, res, next) => {
-  db.defaults({ menu: [], group: {} })
-      .write();
+router.get('/', function (req, res, next) {
+  // db.defaults({ menu: [], group: {} })
+  //     .write();
   res.render('index');
-};
+});
+
+module.exports = router;
