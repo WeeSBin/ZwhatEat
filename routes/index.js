@@ -11,8 +11,6 @@ const db = low(adapter);
  * Read
  */
 router.get('/', function (req, res, next) {
-  // db.defaults({ menu: [], group: {} })
-  //     .write();
   res.render('index');
 });
 

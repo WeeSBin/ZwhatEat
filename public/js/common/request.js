@@ -29,14 +29,14 @@ export function request(method, url, data, callback) {
                         if (res.hasOwnProperty('msg')) alert(res.msg);
                         callback(res);
                     } catch (e) {
-                        alert('json 이 아니야?' + e.description);
+                        alert('Error(1): ' + e.description);
                     }
                 } else {
-                    alert('어찌 에러가 났을까?' + httpRequest.responseText);
+                    alert('Error(2): ' + httpRequest.responseText);
                 }
             }
         } catch (e) {
-            alert('서버가 꺼졌을까?' + e.description);
+            alert('Error(3): ' + e.description);
         }
     }
 }

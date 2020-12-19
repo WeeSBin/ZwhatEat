@@ -1,6 +1,3 @@
-const view = {
-
-};
-
-
-export {view}
+/**
+ * Front side common js
+ */

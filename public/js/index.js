@@ -3,7 +3,13 @@ import {Table} from './common/table.js';
 /**
  * Init
  */
+const table01 = new Table();
 request('GET', '/menu', {}, function (res) {
+    table01.setConfig({
+        targetId: 'table01'
+    });
+    table01.setData(res.menuList);
+    table01.makeTable();
     // todo 리스트 뿌리기
 });
 /**
