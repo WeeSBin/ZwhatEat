@@ -1,28 +1,35 @@
 import {request} from './common/request.js';
-import {Table} from './common/table.js';
+import {Kanban} from './common/kanban.js';
 /**
  * Init
  */
-const table01 = new Table();
+const config = {
+    targetId: 'board01'
+};
+const table01 = new Kanban(config); // 테이블 생성
+// 첫 조회
 request('GET', '/menu', {}, function (res) {
-    table01.setConfig({
-        targetId: 'table01'
-    });
     table01.setData(res.menuList);
-    table01.makeTable();
-    // todo 리스트 뿌리기
 });
 /**
  * Event
  */
-const button = document.getElementById('register');
-button.addEventListener('keyup', function (e) {
-    var key = e.key || e.keyCode;
+// 등록 input 엔터 이벤트
+document.getElementById('register').addEventListener('keyup', function (e) {
+    const key = e.key || e.keyCode;
     if (key === 'Enter' || key === 13) {
         request('POST', '/menu', {name: this.value}, function (res) {
             if (res.hasOwnProperty('menuList')) {
-                // todo 리스트 뿌리기
+                table01.setData(res.menuList);
             }
         })
     }
+});
+// 메뉴 추첨
+document.getElementById('whatEat').addEventListener('click', function (e) {
+    request('GET', '/menu/whatEat', null, function (res) {
+        if (res.hasOwnProperty('whatEat')) {
+            alert(res.whatEat.name)
+        }
+    })
 });

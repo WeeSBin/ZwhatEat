@@ -20,10 +20,8 @@ exports.registerMenu = (body) => {
 };
 /**
  * @description 메뉴 가져오기
- * @return {Object.<Array.<string, string>>}
+ * @return {Array.<string, string>}
  */
 exports.getMenu = () => {
-    return {
-        menuList: db.get('menu').value()
-    };
+    return db.get('menu').value();
 };
