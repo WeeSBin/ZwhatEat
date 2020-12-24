@@ -9,7 +9,7 @@ const config = {
 const table01 = new Kanban(config); // 테이블 생성
 // 첫 조회
 request('GET', '/menu', {}, function (res) {
-    table01.setData(res.menuList);
+    // table01.setData(res.menuList);
 });
 /**
  * Event

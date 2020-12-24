@@ -1,10 +1,75 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: rgb(22, 27, 34);
+  background-color: #0d1117;
   color: rgb(201, 209, 217);
 }
-
+header {
+  padding: 8px;
+  display: block;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+h2 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
 a {
-  color: #00B7FF;
+  text-decoration: none;
+}
+time {
+  font-size: 12px;
+}
+time, h2 {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.board {
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.column {
+  float: right;
+  min-width: 355px;
+  max-width: 355px;
+  background-color: #06090f;
+  width: 25%;
+  padding: 0 10px;
+  border: solid 1px #21262d;
+  border-radius: 6px;
+  margin-right: 16px;
+}
+.column:last-child {
+  border-right: 0;
+}
+.job {
+  background: #161b22;
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: solid 1px #30363d;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.column.done .job {
+  opacity: 0.75;
+  transition: all 0.5s;
+}
+.column.done .job:hover {
+  opacity: 1;
+}
+.job:hover {
+  cursor: move;
+}
+.p-8 {
+  padding: 8px;
 }
