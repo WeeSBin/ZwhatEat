@@ -11,32 +11,41 @@ body {
 }
 header {
   padding: 8px;
-  display: block;
-  text-align: center;
+  display: inline;
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: 600;
 }
 h2 {
   font-size: 16px;
-  margin-bottom: 10px;
 }
 a {
   text-decoration: none;
 }
-time {
-  font-size: 12px;
-}
-time, h2 {
+h2 {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
+svg {
+  fill: #8b949e;
+  cursor: pointer;
+  margin-left: 5px;
+}
+/* 공통 */
+.float-right {
+  float: right;
+}
+.p-8 {
+  padding: 8px;
+}
+/* 보드 */
 .board {
   display: flex;
   padding-top: 10px;
   padding-bottom: 10px;
 }
+/* 컬럼 */
 .column {
   float: right;
   min-width: 355px;
@@ -51,6 +60,10 @@ time, h2 {
 .column:last-child {
   border-right: 0;
 }
+.header {
+  padding: 8px;
+}
+/* 잡 */
 .job {
   background: #161b22;
   position: relative;
@@ -60,16 +73,10 @@ time, h2 {
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
-.column.done .job {
-  opacity: 0.75;
-  transition: all 0.5s;
-}
-.column.done .job:hover {
-  opacity: 1;
-}
 .job:hover {
-  cursor: move;
+  border-color: #6e7681;
+  cursor: pointer;
 }
-.p-8 {
-  padding: 8px;
+.job:focus {
+  color: tomato;
 }
