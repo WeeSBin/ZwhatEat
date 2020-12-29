@@ -32,12 +32,43 @@ svg {
   cursor: pointer;
   margin-left: 5px;
 }
+button {
+  display: inline-block;
+  color: #fff;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0;
+  text-shadow: none;
+  text-align: center;
+  font: 400 13px Arial;
+  vertical-align: middle;
+  cursor: pointer;
+  box-sizing: border-box;
+  box-shadow: 0 0 transparent, 0 0 transparent;
+  align-items: flex-start;
+  background-color: #21262d;
+  margin: 0;
+  padding: 5px 16px;
+  border: 1px solid #30363d;
+  border-image: initial;
+  border-radius: 6px;
+}
+button:hover {
+  background-color: #30363d;
+  border-color: #8b949e;
+  transition-duration: .1s;
+}
 /* 공통 */
 .float-right {
   float: right;
 }
 .p-8 {
   padding: 8px;
+}
+.dp-flex {
+  display: flex;
 }
 /* 보드 */
 .board {
@@ -63,6 +94,10 @@ svg {
 .header {
   padding: 8px;
 }
+.header header:hover {
+  color: #6e7681;
+  cursor: pointer;
+}
 /* 잡 */
 .job {
   background: #161b22;
@@ -79,4 +114,38 @@ svg {
 }
 .job:focus {
   color: tomato;
+}
+/* 입력 폼 */
+.form {
+  margin-bottom: 10px;
+}
+.form textarea {
+  padding: 8px 12px;
+  line-height: 1.5;
+  resize: vertical;
+  width: 100%;
+  background-color: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.add {
+  flex: 1;
+  background-color: #238636;
+  border-color: #2ea043;
+  box-shadow: 0 0 transparent, 0 0 transparent;
+  margin-right: 4px;
+  white-space: nowrap;
+  padding: 5px 16px;
+  position: relative;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+.add:hover {
+  background-color: #2ea043;
+  border-color: #3fb950;
+}
+.cancel {
+  flex: 1;
 }
