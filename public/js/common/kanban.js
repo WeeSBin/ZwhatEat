@@ -2,11 +2,16 @@
  * weSBin Kanban library
  * @description 테이블 공통 js
  * @param {Object} config {
- *     targetId: <string>
+ *     targetId: <string>,
+ *     column: [Object<string, string>]
  * }
  */
 function Kanban(config) {
-    let data = [];
+    this.config = {
+        targetId: '', // 칸반 보드가 생길 태그
+        column: [] // 컬럼 리스트
+    };
+    let data = []; // 칸반 보드에 담길 데이터 리스트
     this.setData = function (dataList) {
         data = dataList;
         this.fillBoard();
@@ -14,12 +19,9 @@ function Kanban(config) {
     this.getData = function () {
         return data;
     };
-
     if (_.isPlainObject(config)) {
         this.config = config;
         this.makeBoard();
-    } else {
-        this.config = {};
     }
 }
 Kanban.prototype.setConfig = function (config) {
@@ -28,22 +30,13 @@ Kanban.prototype.setConfig = function (config) {
 Kanban.prototype.getConfig = function () {
     return this.config;
 };
-Kanban.prototype.fillBoard = function () {
-    if (!this.config.targetId) return false;
-    const table = document.getElementById(this.config.targetId);
-    table.innerHTML = "";
-    const data = this.getData();
-    data.forEach(function (content) {
-        const _tr = document.createElement('tr');
-        for (const contentKey in content) {
-            if (content.hasOwnProperty(contentKey)) {
-                const _td = document.createElement('td');
-                _td.textContent = content[contentKey];
-                _tr.appendChild(_td);
-            }
-        }
-        table.appendChild(_tr);
-    });
+Kanban.prototype.setColumn = function (column) {
+    if (_.isArray(column)) {
+        this.config.column = column;
+    }
+};
+Kanban.prototype.getColumn = function () {
+    return this.config.column;
 };
 Kanban.prototype.makeBoard = function () {
     const targetId = this.config.targetId;
@@ -87,6 +80,23 @@ Kanban.prototype.makeBoard = function () {
 
     innerHtml.push('</div>');
     document.getElementById(targetId).innerHTML = innerHtml.join('');
+};
+Kanban.prototype.fillBoard = function () {
+    if (!this.config.targetId) return false;
+    const table = document.getElementById(this.config.targetId);
+    table.innerHTML = "";
+    const data = this.getData();
+    data.forEach(function (content) {
+        const _tr = document.createElement('tr');
+        for (const contentKey in content) {
+            if (content.hasOwnProperty(contentKey)) {
+                const _td = document.createElement('td');
+                _td.textContent = content[contentKey];
+                _tr.appendChild(_td);
+            }
+        }
+        table.appendChild(_tr);
+    });
 };
 
 export {Kanban};

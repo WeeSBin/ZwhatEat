@@ -4,13 +4,21 @@ import {Kanban} from './common/kanban.js';
  * Init
  */
 const config = {
-    targetId: 'board01'
+    targetId: 'board01',
 };
 const table01 = new Kanban(config); // 테이블 생성
+
+async function initView () {
+    await request('GET', '/menu/test', {}, function (res) {
+        console.log('test:' + res);
+    });
+    await request('GET', '/menu', {}, function (res) {
+        // table01.setData(res.menuList);
+        console.log('menu:' + res);
+    });
+}
+initView();
 // 첫 조회
-request('GET', '/menu', {}, function (res) {
-    // table01.setData(res.menuList);
-});
 /**
  * Event
  */
