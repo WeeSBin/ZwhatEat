@@ -5,7 +5,7 @@ const logger = require('morgan');
 /**
  * Router Description
  */
-const managerRouter = require('./routes/manager');
+const routerManager = require('./routes/routerManager');
 
 const app = express();
 /**
@@ -24,6 +24,6 @@ app.use(cookieParser());
  * Router Description
  */
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', managerRouter);
+app.use('/', routerManager);
 
 module.exports = app;

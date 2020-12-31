@@ -37,12 +37,4 @@ router.get('/whatEat', function (req, res, next) {
     })
 });
 
-router.get('/test', function (req, res, next) {
-    setTimeout(() => {
-        res.json({
-            whatEat: 'test'
-        })
-    }, 2000)
-});
-
 module.exports = router;

@@ -7,18 +7,17 @@ const config = {
     targetId: 'board01',
 };
 const table01 = new Kanban(config); // 테이블 생성
-
+// 첫 조회
 async function initView () {
-    await request('GET', '/menu/test', {}, function (res) {
-        console.log('test:' + res);
+    await request('GET', '/group', {}, function (res) {
+        table01.setGroup(res.groupList);
+        table01.makeBoard();
     });
-    await request('GET', '/menu', {}, function (res) {
-        // table01.setData(res.menuList);
-        console.log('menu:' + res);
+    request('GET', '/menu', {}, function (res) {
+        table01.setData(res.menuList);
     });
 }
 initView();
-// 첫 조회
 /**
  * Event
  */

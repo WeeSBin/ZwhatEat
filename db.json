@@ -2,19 +2,23 @@
   "menu": [
     {
       "_id": 1,
-      "name": "test",
-      "column": 1
+      "name": "test1",
+      "group": 1
     },
     {
       "_id": 2,
-      "name": "test",
-      "column": 1
+      "name": "test2",
+      "group": 1
     }
   ],
-  "column": [
+  "group": [
     {
       "_id": 1,
       "name": "All"
+    },
+    {
+      "_id": 2,
+      "name": "ETC"
     }
   ]
 }
