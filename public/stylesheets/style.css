@@ -128,6 +128,7 @@ button:hover {
   border: 1px solid #21262d;
   border-radius: 6px;
   margin-bottom: 10px;
+  color: #c9d1d9;
 }
 .add {
   flex: 1;
