@@ -1,5 +1,6 @@
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
+const { v4: uuidv4 } = require('uuid');
 
 const adapter = new FileSync('db.json');
 const db = low(adapter);
@@ -9,9 +10,13 @@ const db = low(adapter);
  * @return {boolean}
  */
 exports.registerMenu = (body) => {
-    if (body.name) {
+    if (body.menu) {
         db.get('menu')
-            .push({name: body.name})
+            .push({
+                _id: uuidv4(),
+                name: body.menu,
+                group: body.group.split('-')[1]
+            })
             .write();
         return true;
     } else {

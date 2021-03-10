@@ -27,9 +27,9 @@ try {
 /**
  * Event
  */
-
+// job 등록 이벤트
 table01.setEvent('addJob', function (res) {
-    request('POST', '/menu', {name: res}, (res) => {
+    request('POST', '/menu', res, (res) => {
         if (res.hasOwnProperty('menuList')) {
             table01.setData(res.menuList);
         }

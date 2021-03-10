@@ -8,22 +8,24 @@ function Kanban(config) {
      * @description 칸반 보드에서 활용할 각종 설정 값
      * @type {{targetId: string, event: {}, group: Array}}
      */
-    this.config = Immutable.Map({
-            targetId: '', // 칸반 보드가 생길 태그
-            group: [], // fixme 숨기자 컬럼 리스트
-            event: Immutable.Map({
-                addJob: function (res) {
-                    console.log(res);
-                },
-            })
-    });
+    this.config = {
+        targetId: '', // 칸반 보드가 생길 태그
+        group: [], // fixme 컬럼 리스트 숨겨야 할것 같다
+        event: {
+            addJob: function (res) {
+                console.log(`addJobEvent ${res}`)
+            }
+        }
+    };
     /**
      * @description 칸반 보드에 담길 데이터 리스트
      * @type {Array}
      */
     let data = [];
     this.setData = function (dataList) {
+        // fixme 하나의 데이터가 수정되면 모드 보드가 다시 그려지게 되어있다. 비효율이다 바꾸자.
         data = dataList;
+        this.clearBoard();
         this.fillBoard();
     };
     this.getData = function () {
@@ -94,7 +96,10 @@ function Kanban(config) {
         // job 생성
         document.getElementsByName('kanban-button-add-job').forEach((element) => {
             element.addEventListener('click', function (e) {
-                _this.config.get('event').get('addJob')(this.closest('div[name=kanban-div-inputForm]').querySelector('textarea').value);
+                _this.config.event.addJob({
+                    menu: this.closest('div[name=kanban-div-inputForm]').querySelector('textarea').value,
+                    group: this.closest('div.group').id
+                });
             })
         });
         // job 입력 폼 취소
@@ -111,7 +116,8 @@ function Kanban(config) {
      * Constructor
      */
     if (_.isPlainObject(config)) {
-        this.config = this.config.merge(config);
+        // fixme lodash import 를 index.ejs 을 통해서 하고 있는데 방식을 전환해야 한다.
+        _.merge(this.config, config);
     }
 }
 
@@ -131,23 +137,23 @@ function setAttributes(el, attrs) {
  * Prototype
  */
 Kanban.prototype.setEvent = function (eventName, func) {
-    this.config.get('event').update(eventName, value => func);
+    if (_.isFunction(func)) this.config.event[eventName] = func;
 };
 Kanban.prototype.setGroup = function (group) {
     // todo _ 에 대한 검증 필요
     if (_.isArray(group)) {
-        this.config = this.config.set('group', group);
+        this.config.group = group;
     }
 };
 Kanban.prototype.getGroup = function () {
-    return this.config.get('group');
+    return this.config.group;
 };
 Kanban.prototype.makeBoard = function () {
     // todo 각 태그, 버튼 등을 한곳에서 관리해야 편하지 않을까? => tagBuilder 진행 중
-    const targetId = this.config.get('targetId');
+    const targetId = this.config.targetId;
     if (!targetId) return false;
     const innerHtml = []; // 타겟 태그 안에 들어갈 보드 HTML
-    const groupList = this.config.get('group'); // 그룹 리스트
+    const groupList = this.config.group; // 그룹 리스트
     // 전체 보드 생성 #s
     innerHtml.push('<div class="board" name="board">');
         groupList.forEach((group, index) => {
@@ -192,11 +198,11 @@ Kanban.prototype.makeBoard = function () {
     innerHtml.push('</div>');
     // 전체 보드 생성 #e
     document.getElementById(targetId).innerHTML = innerHtml.join('');
-
     this.initDefaultEvent(this);
 };
+// 보드에 job 채워넣기
 Kanban.prototype.fillBoard = function () {
-    const board = document.getElementById(this.config.get('targetId')).children.namedItem('board');
+    const board = document.getElementById(this.config.targetId).children.namedItem('board');
     const dataList = this.getData();
     dataList.forEach((data, index) => {
         /**
@@ -213,6 +219,11 @@ Kanban.prototype.fillBoard = function () {
         innerHtml.push('</article>');
         group.insertAdjacentHTML('beforeend', innerHtml.join(''));
     });
+};
+// 보드 초기화
+Kanban.prototype.clearBoard = function () {
+    const board = document.getElementById(this.config.targetId).children.namedItem('board');
+    board.querySelectorAll('.job').forEach(tag => tag.remove());
 };
 
 export {Kanban};
