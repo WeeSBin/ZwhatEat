@@ -96,10 +96,13 @@ function Kanban(config) {
         // job 생성
         document.getElementsByName('kanban-button-add-job').forEach((element) => {
             element.addEventListener('click', function (e) {
-                _this.config.event.addJob({
-                    menu: this.closest('div[name=kanban-div-inputForm]').querySelector('textarea').value,
-                    group: this.closest('div.group').id
-                });
+                const menu = this.closest('div[name=kanban-div-inputForm]').querySelector('textarea').value;
+                if (menu) {
+                    _this.config.event.addJob({
+                        menu: menu,
+                        group: this.closest('div.group').id
+                    });
+                }
             })
         });
         // job 입력 폼 취소
