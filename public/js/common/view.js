@@ -1,3 +1,0 @@
-/**
- * Front side common js
- */
