@@ -1,23 +1,65 @@
-import logo from './logo.svg';
 import './App.css';
+import {Box, Container, Grid, makeStyles, Paper, Typography} from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    height: `20vh`
+  }
+}))
 
 function App() {
+
+  const classes = useStyles()
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Box>
+        <Container maxWidth={`lg`}>
+          <Grid container
+                direction={`column`}
+          >
+            <Grid item
+                  className={classes.grid}
+            >
+              <Paper variant={`outlined`}>
+                <Typography variant={`h5`}>Test1</Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item
+                  className={classes.grid}
+            >
+              <Paper variant={`outlined`}>
+                <Typography variant={`h5`}>Test1</Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item
+                  className={classes.grid}
+            >
+              <Paper variant={`outlined`}>
+                <Typography variant={`h5`}>Test1</Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item
+                  className={classes.grid}
+            >
+              <Paper variant={`outlined`}>
+                <Typography variant={`h5`}>Test1</Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item
+                  className={classes.grid}
+            >
+              <Paper variant={`outlined`}>
+                <Typography variant={`h5`}>Test1</Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
     </div>
   );
 }
