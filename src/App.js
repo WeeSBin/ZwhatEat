@@ -1,15 +1,37 @@
 import './App.css';
-import {Box, Container, Grid, makeStyles, Paper, Typography} from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  grid: {
-    height: `20vh`
-  }
-}))
+import {Box, Container, Grid} from "@material-ui/core";
+import Category from "./components/Category"
+import {useEffect, useState} from "react"
 
 function App() {
 
-  const classes = useStyles()
+  const [korean, setKorean] = useState(true)
+  const [western, setWestern] = useState(true)
+  const [china, setChina,] = useState(true)
+  const [japan, setJapan] = useState(true)
+  const [snack, setSnack] = useState(true)
+
+  const handleClick = (category) => {
+    switch (category) {
+      case `korean`:
+        setKorean(!korean)
+        break
+      case `western`:
+        setWestern(!western)
+        break
+      case `china`:
+        setChina(!china)
+        break
+      case `japan`:
+        setJapan(!japan)
+        break
+      case `snack`:
+        setSnack(!snack)
+        break
+      default:
+        console.log("Error, handleClick")
+    }
+  }
 
   return (
     <div className="App">
@@ -18,50 +40,18 @@ function App() {
           <Grid container
                 direction={`column`}
           >
-            <Grid item
-                  className={classes.grid}
-            >
-              <Paper variant={`outlined`}>
-                <Typography variant={`h5`}>Test1</Typography>
-              </Paper>
-            </Grid>
 
-            <Grid item
-                  className={classes.grid}
-            >
-              <Paper variant={`outlined`}>
-                <Typography variant={`h5`}>Test1</Typography>
-              </Paper>
-            </Grid>
+            <Category pick={korean} category={`korean`} onClick={handleClick} />
+            <Category pick={western} category={`western`} onClick={handleClick} />
+            <Category pick={china} category={`china`} onClick={handleClick} />
+            <Category pick={japan} category={`japan`} onClick={handleClick} />
+            <Category pick={snack} category={`snack`} onClick={handleClick} />
 
-            <Grid item
-                  className={classes.grid}
-            >
-              <Paper variant={`outlined`}>
-                <Typography variant={`h5`}>Test1</Typography>
-              </Paper>
-            </Grid>
-
-            <Grid item
-                  className={classes.grid}
-            >
-              <Paper variant={`outlined`}>
-                <Typography variant={`h5`}>Test1</Typography>
-              </Paper>
-            </Grid>
-
-            <Grid item
-                  className={classes.grid}
-            >
-              <Paper variant={`outlined`}>
-                <Typography variant={`h5`}>Test1</Typography>
-              </Paper>
-            </Grid>
           </Grid>
         </Container>
       </Box>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
