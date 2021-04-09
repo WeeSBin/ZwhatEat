@@ -5,18 +5,18 @@ import clsx from "clsx"
 const useStyles = makeStyles((theme) => ({
   grid: {
     height: `20vh`,
-    background: `rgb(40, 44, 52)`
+    'background-image': "url('/images/korean.jpg')"
   },
   disable: {
-    opacity: 0.9
+    opacity: 0.5
   },
   typography: {
     color: `white`
   }
 }))
 
-function rtnCategoryName(category) {
-  switch (category) {
+function rtnCategoryName(key) {
+  switch (key) {
     case `korean`:
       return `한식`
     case `western`:
@@ -33,25 +33,25 @@ function rtnCategoryName(category) {
 }
 
 const areEqual = (prevProps, nextProps) => {
-  return prevProps.pick === nextProps.pick;
+  return prevProps.category[prevProps.name] === nextProps.category[nextProps.name];
 }
 
-const Category = ({category, onClick, pick}) => {
+const Category = ({category, onClick, name}) => {
   const classes = useStyles()
 
   return (
     <Grid item
           className={clsx(classes.grid,{
-            [classes.disable]: !pick
+            [classes.disable]: !category[name]
           })}
           onClick={(e) => {
-            onClick(category)
+            onClick(name)
           }}
     >
       <Typography variant={`h5`}
                   className={classes.typography}
       >
-        {rtnCategoryName(category)}
+        {rtnCategoryName(name)}
       </Typography>
     </Grid>
   )
