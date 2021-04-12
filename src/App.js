@@ -2,6 +2,7 @@ import './App.css';
 import {Box, Container} from "@material-ui/core";
 import {useState} from "react"
 import Main from "./components/Main/Main"
+import Raffle from "./components/Raffle/Raffle"
 
 const App = () => {
   // 활성화, 비활성화 토글 변수
@@ -20,7 +21,6 @@ const App = () => {
   }
   // 활성화된 category가 한개면 true
   const chkCategory = () => {
-    // 왜 개발자 모드에선 두번 실행되는 것처럼 보이는거지?
     let cnt = 0;
     for (const key in category) {
       if (category[key]) cnt++
@@ -37,10 +37,10 @@ const App = () => {
       <Box>
         <Container maxWidth={`lg`}>
           {
-          chkCategory() ? 
-          <p>Raffle</p>
-          :
-          <Main category={category} handleClick={handleClick}></Main>
+            chkCategory() ? 
+            <Main category={category} handleClick={handleClick}></Main>
+            :
+            <Raffle/>
           }
         </Container>
       </Box>
