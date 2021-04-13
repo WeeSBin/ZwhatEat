@@ -1,2 +1,2 @@
-# 뭐먹
-for Zsoo
+# 뭐먹(what-eat)
+for Choice disorder
