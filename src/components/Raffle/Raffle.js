@@ -1,27 +1,84 @@
 import React from 'react'
-import {Grid, makeStyles, Box, Typography, Paper} from "@material-ui/core"
+import {Grid, makeStyles, Box, Typography, Button} from "@material-ui/core"
 import Unlotted from './Unlotted'
-import {Octokit} from "@octokit/core";
+import {Octokit} from "@octokit/core"
+import clsx from "clsx"
 
 const useStyles = makeStyles((theme) => ({
   topGridContainer: {
-    height: '30vh',
-    background: 'rgb(40, 44, 52)',
+    height: '40vh',
+    background: 'rgb(30, 34, 42)',
     padding: theme.spacing(2)
   },
   topGridItem: {
     height: '100%',
-    padding: theme.spacing(2)
+    padding: theme.spacing(8)
+  },
+  whiteText: {
+    color: 'rgb(255, 255, 255)',
+  },
+  raffleMenu: {
+    background: 'rgb(40, 44, 52)'
+  },
+  middleBox: {
+    height: '35vh',
+    background: 'rgb(30, 34, 42)',
+    borderTop: '1px solid rgb(201, 209, 217)',
+    overflow: 'scroll',
   },
   bottomBox: {
-    height: '70vh',
-    background: 'rgb(40, 44, 52)',
+    height: '25vh',
+    background: 'rgb(30, 34, 42)',
     borderTop: '1px solid rgb(201, 209, 217)',
+  },
+  bottomGridContainer: {
+    outline: '1px solid rgb(201, 209, 217)',
+    height: '100%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '100%',
+    maxWidth: '760px',
+    padding: theme.spacing(2),
   },
   paper: {
     height: '100%',
     padding: theme.spacing(2),
-    boxSizing: 'border-box'
+  },
+  register: {
+    border: '1px solid rgb(201, 209, 217)',
+    borderRadius: '6px',
+  },
+  registerHeader: {
+    padding: '8px 8px 0',
+    marginBottom: '-1px',
+    zIndex: '1'
+  },
+  registerBody: {
+    padding: theme.spacing(1),
+    border: '1px solid rgb(201, 209, 217)',
+  },
+  registerFooter: {
+    padding: '0 8px 8px',
+    justifyContent: 'flex-end'
+  },
+  textArea: {
+    resize: 'vertical',
+    width: '100%',
+    minHeight: '90px',
+    padding: theme.spacing(1),
+    borderRadius: '6px',
+    lineHeight: '1.5'
+  },
+  registerButton: {
+    textTransform: 'none'
+  },
+  registerTab: {
+    padding: '8px 16px',
+    color: 'rgb(255, 255, 255)',
+    background: 'rgb(30, 34, 42)',
+    border: '1px solid rgb(201, 209, 217)',
+    borderBottom: '0',
+    borderRadius: '6px 6px 0 0',
   }
 }))
 
@@ -53,17 +110,10 @@ const getMenu = async (category) => {
       repo: 'what-eat',
       issue_number: issue_number
     })
-    // Raffle
-    const answer = {lotted: '', unlotted: []}
-    const c_len = comments.data.length
-    const randomNum = Math.floor(Math.random() * c_len)
-    for (let i = 0; i < c_len; i++) {
-      if (i === randomNum) {
-        answer.lotted = comments.data[i].body
-      } else {
-        answer.unlotted.push(comments.data[i].body)
-      }
-    }
+    // 메뉴 이름 추출
+    const answer = []
+    comments.data.forEach(menu => answer.push(menu.body))
+
     return answer
   }
 }
@@ -71,10 +121,8 @@ const getMenu = async (category) => {
 const Raffle = ({category}) => {
   const classes = useStyles()
 
-  const [menus, setMenus] = React.useState({
-    lotted: '',
-    unlotted: []
-  })
+  const [menus, setMenus] = React.useState([])
+  const [raffleResult, setRaffleResult] = React.useState('')
 
   React.useEffect(() => {
     getMenu(category).then(answer => {
@@ -86,29 +134,91 @@ const Raffle = ({category}) => {
     })
   }, [])
 
+  const raffleMenu = () => {
+    const m_len = menus.length
+    const randomNum = Math.floor(Math.random() * m_len) // 랜덤 변수
+    setRaffleResult(menus[randomNum])
+  }
+
   return (
     <Box>
-      {/* TopGrid #s */}
+      {/* Top #s */}
       <Grid container
             className={classes.topGridContainer}
             alignItems={'center'}
             justify={'center'}
-            >
+      >
         <Grid item
               className={classes.topGridItem}
               xs={12}
-              >
-          <Paper className={classes.paper}>
-            <Typography>{menus.lotted}</Typography>
-          </Paper>
+        >
+          <Typography variant={'h2'}
+                      className={classes.whiteText}
+                      align={'left'}
+          >
+            오늘은
+          </Typography>
+          <Typography variant={'h2'}
+                      className={clsx(classes.whiteText, classes.raffleMenu)}
+                      align={'left'}
+                      onClick={(e) => {
+                        raffleMenu()
+                      }}
+          >
+            {raffleResult ? raffleResult : '이건'}
+          </Typography>
+          <Typography variant={'h2'}
+                      className={classes.whiteText}
+                      align={'left'}
+          >
+            어때요
+          </Typography>
         </Grid>
       </Grid>
-      {/* TopGrid #e */}
-      {/* BottomGrid #s */}
-      <Box  className={classes.bottomBox}>
-        <Unlotted unlotted={menus.unlotted}></Unlotted>
+      {/* Top #e */}
+      {/* Middle #s */}
+      <Box  className={classes.middleBox}>
+        <Unlotted unlotted={menus}></Unlotted>
       </Box>
-      {/* BottomGrid #e */}
+      {/* Middle #e */}
+      {/* Bottom #s */}
+      <Box className={classes.bottomBox}>
+        <Grid container
+              className={classes.bottomGridContainer}
+        >
+          <Grid container
+                className={classes.register}
+          >
+            <Grid container
+                  className={classes.registerHeader}
+            >
+              <Grid item
+                    className={classes.registerTab}
+              >
+                Write
+              </Grid>
+            </Grid>
+            <Grid container
+                  className={classes.registerBody}
+            >
+              <textarea className={classes.textArea}
+                        placeholder={'regist menu'}
+              />
+            </Grid>
+            <Grid container
+                  className={classes.registerFooter}
+            >
+              <Button variant={'contained'}
+                      size={'small'}
+                      className={classes.registerButton}
+              >
+                Default
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
+      {/* Bottom #e */}
     </Box>
   )
 }

@@ -5,7 +5,7 @@ import clsx from "clsx"
 const useStyles = makeStyles((theme) => ({
   grid: {
     height: `20vh`,
-    background: `rgb(40, 44, 52)`
+    background: 'rgb(30, 34, 42)',
     // 'background-image': "url('/images/korean.jpg')"
   },
   disable: {

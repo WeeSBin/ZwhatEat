@@ -3,17 +3,15 @@ import {Grid, makeStyles, Paper, Typography} from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   bottomGridContainer: {
-    height: '25%',
+    height: '100%',
     padding: theme.spacing(1)
   },
   bottomGridItem: {
-    height: '100%',
     padding: theme.spacing(1)
   },
   paper: {
     height: '100%',
     padding: theme.spacing(2),
-    boxSizing: 'border-box'
   }
 }))
 
@@ -28,6 +26,7 @@ const Unlotted = ({unlotted}) => {
           <Grid item
                 xs={3}
                 className={classes.bottomGridItem}
+                key={menu}
           >
             <Paper  className={classes.paper}
                     variant={'outlined'}

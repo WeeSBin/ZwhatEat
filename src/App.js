@@ -4,8 +4,6 @@ import {useState} from "react"
 import Main from "./components/Main/Main"
 import Raffle from "./components/Raffle/Raffle"
 
-import Search from "./components/Raffle/Search"
-
 const App = () => {
   // 활성화, 비활성화 토글 변수
   const [category, setCategory] = useState(
@@ -43,7 +41,6 @@ const App = () => {
             <Main category={category} handleClick={handleClick}></Main>
             :
             <Raffle category={'china'}/>
-            // <Search></Search>
           }
         </Container>
       </Box>
