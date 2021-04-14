@@ -1,5 +1,5 @@
 import React from 'react'
-import {Grid, makeStyles, Paper} from "@material-ui/core"
+import {Grid, makeStyles, Paper, Typography} from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   bottomGridContainer: {
@@ -17,49 +17,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Unlotted = () => {
+const Unlotted = ({unlotted}) => {
   const classes = useStyles()
-
   return (
     <Grid container
           className={classes.bottomGridContainer}
     >
-      <Grid item
-            xs={3}
-            className={classes.bottomGridItem}
-      >
-        <Paper  className={classes.paper}
-                variant={'outlined'}
-        >
-        </Paper>
-      </Grid>
-      <Grid item
-            xs={3}
-            className={classes.bottomGridItem}
-      >
-        <Paper  className={classes.paper}
-                variant={'outlined'}
-        >
-        </Paper>
-      </Grid>
-      <Grid item
-            xs={3}
-            className={classes.bottomGridItem}
-      >
-        <Paper  className={classes.paper}
-                variant={'outlined'}
-        >
-        </Paper>
-      </Grid>
-      <Grid item
-            xs={3}
-            className={classes.bottomGridItem}
-      >
-        <Paper  className={classes.paper}
-                variant={'outlined'}
-        >
-        </Paper>
-      </Grid>
+      {unlotted.map(menu => {
+        return (
+          <Grid item
+                xs={3}
+                className={classes.bottomGridItem}
+          >
+            <Paper  className={classes.paper}
+                    variant={'outlined'}
+            >
+              <Typography>{menu}</Typography>
+            </Paper>
+          </Grid>
+        )
+      })}
     </Grid>
   )
 }

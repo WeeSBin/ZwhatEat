@@ -71,13 +71,20 @@ const getMenu = async (category) => {
 const Raffle = ({category}) => {
   const classes = useStyles()
 
-  const result = getMenu(category) // 추첨 결과
-  if (result === 0) {
-    // 에러
-  } else {
-    
-  }
-  
+  const [menus, setMenus] = React.useState({
+    lotted: '',
+    unlotted: []
+  })
+
+  React.useEffect(() => {
+    getMenu(category).then(answer => {
+      if (answer === 0) {
+        alert('Error')
+      } else {
+        setMenus(answer)
+      }
+    })
+  }, [])
 
   return (
     <Box>
@@ -92,15 +99,14 @@ const Raffle = ({category}) => {
               xs={12}
               >
           <Paper className={classes.paper}>
-            <Typography>Menu</Typography>
+            <Typography>{menus.lotted}</Typography>
           </Paper>
         </Grid>
       </Grid>
       {/* TopGrid #e */}
       {/* BottomGrid #s */}
       <Box  className={classes.bottomBox}>
-        <Unlotted></Unlotted>
-        <Unlotted></Unlotted>
+        <Unlotted unlotted={menus.unlotted}></Unlotted>
       </Box>
       {/* BottomGrid #e */}
     </Box>
