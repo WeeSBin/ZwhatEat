@@ -59,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
   },
   registerFooter: {
     padding: '0 8px 8px',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   textArea: {
     resize: 'vertical',
@@ -195,14 +196,14 @@ const Raffle = ({category}) => {
               <Grid item
                     className={classes.registerTab}
               >
-                Write
+                메뉴
               </Grid>
             </Grid>
             <Grid container
                   className={classes.registerBody}
             >
               <textarea className={classes.textArea}
-                        placeholder={'regist menu'}
+                        placeholder={'등록하고 싶은 메뉴를 적어주세요.'}
               />
             </Grid>
             <Grid container
@@ -212,7 +213,7 @@ const Raffle = ({category}) => {
                       size={'small'}
                       className={classes.registerButton}
               >
-                Default
+                등록
               </Button>
             </Grid>
           </Grid>
