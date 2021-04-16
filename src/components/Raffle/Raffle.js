@@ -2,6 +2,7 @@ import React from 'react'
 import {Grid, makeStyles, Box, Typography, Button} from "@material-ui/core"
 import Unlotted from './Unlotted'
 import {Octokit} from "@octokit/core"
+import { createOAuthAppAuth, createOAuthUserAuth } from "@octokit/auth-oauth-app";
 import clsx from "clsx"
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid rgb(201, 209, 217)',
   },
   bottomGridContainer: {
-    outline: '1px solid rgb(201, 209, 217)',
     height: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   register: {
+    background: 'rgb(40, 44, 52)',
     border: '1px solid rgb(201, 209, 217)',
     borderRadius: '6px',
   },
@@ -54,13 +55,16 @@ const useStyles = makeStyles((theme) => ({
     zIndex: '1'
   },
   registerBody: {
+    background: 'rgb(30, 34, 42)',
     padding: theme.spacing(1),
-    border: '1px solid rgb(201, 209, 217)',
+    borderTop: '1px solid rgb(201, 209, 217)',
   },
   registerFooter: {
+    background: 'rgb(30, 34, 42)',
     padding: '0 8px 8px',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    borderRadius: '6px'
   },
   textArea: {
     resize: 'vertical',
@@ -83,18 +87,37 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const OAuth = async () => {
+  // const appOctokit = new Octokit({
+  //   authStrategy: createOAuthAppAuth,
+  //   auth: {
+  //     clientId: 'c6f918954021d8a939f9',
+  //     clientSecret: process.env.REACT_APP_CLIENT_SECRETS
+  //   }
+  // })
+
+  // const userOctokit = await appOctokit.auth({
+  //   type: 'oauth-user',
+  //   code
+  // })
+}
+
+// OAuth()
+
+// 인증
+const octokit = new Octokit({
+  auth: process.env.REACT_APP_AUTH
+})
+// 현재 타겟이 되는 이슈의 번호
+let issue_number = 0
+// 메뉴 가져오기
 const getMenu = async (category) => {
-  // authentication
-  const octokit = new Octokit({
-    auth: process.env.REACT_APP_AUTH
-  })
-  // get issues
+  // 이슈 가져오기
   const issueList = await octokit.request('GET /repos/{owner}/{repo}/issues', {
     owner: 'wesbin',
     repo: 'what-eat'
   })
-  // get target category issue number
-  let issue_number = 0
+  // 현재 카테고리에 맞는 이슈의 번호 찾기
   const i_len = issueList.data.length
   for (let i = 0; i < i_len; i++) {
     const issue = issueList.data[i]
@@ -102,7 +125,7 @@ const getMenu = async (category) => {
       issue_number = issue.number
     }
   }
-  // get comments use issue number
+  // 이슈 번호를 이용하여 코멘트 가져오기
   if (issue_number === 0) {
     return 0
   } else {
@@ -124,6 +147,7 @@ const Raffle = ({category}) => {
 
   const [menus, setMenus] = React.useState([])
   const [raffleResult, setRaffleResult] = React.useState('')
+  const [registValue, setRegistValue] = React.useState('')
 
   React.useEffect(() => {
     getMenu(category).then(answer => {
@@ -134,11 +158,20 @@ const Raffle = ({category}) => {
       }
     })
   }, [])
-
+  // 메뉴 추첨
   const raffleMenu = () => {
     const m_len = menus.length
     const randomNum = Math.floor(Math.random() * m_len) // 랜덤 변수
     setRaffleResult(menus[randomNum])
+  }
+  // 메뉴 등록
+  const registMenu = (value) => {
+    octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+      owner: 'wesbin',
+      repo: 'what-eat',
+      issue_number: issue_number,
+      body: value
+    })
   }
 
   return (
@@ -204,6 +237,9 @@ const Raffle = ({category}) => {
             >
               <textarea className={classes.textArea}
                         placeholder={'등록하고 싶은 메뉴를 적어주세요.'}
+                        onChange={(e) => {
+                          setRegistValue(e.target.value)
+                        }}
               />
             </Grid>
             <Grid container
@@ -212,6 +248,9 @@ const Raffle = ({category}) => {
               <Button variant={'contained'}
                       size={'small'}
                       className={classes.registerButton}
+                      onClick={(e) => {
+                        registMenu(registValue)
+                      }}
               >
                 등록
               </Button>
