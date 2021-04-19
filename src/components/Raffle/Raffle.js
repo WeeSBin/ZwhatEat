@@ -1,9 +1,11 @@
 import React from 'react'
-import {Grid, makeStyles, Box, Typography, Button} from "@material-ui/core"
+import {Grid, makeStyles, Box, Typography, Container} from "@material-ui/core"
 import Unlotted from './Unlotted'
 import {Octokit} from "@octokit/core"
-import { createOAuthAppAuth, createOAuthUserAuth } from "@octokit/auth-oauth-app";
+
 import clsx from "clsx"
+
+import Regist from './Regist'
 
 const useStyles = makeStyles((theme) => ({
   topGridContainer: {
@@ -27,82 +29,7 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid rgb(201, 209, 217)',
     overflow: 'scroll',
   },
-  bottomBox: {
-    height: '25vh',
-    background: 'rgb(30, 34, 42)',
-    borderTop: '1px solid rgb(201, 209, 217)',
-  },
-  bottomGridContainer: {
-    height: '100%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    width: '100%',
-    maxWidth: '760px',
-    padding: theme.spacing(2),
-  },
-  paper: {
-    height: '100%',
-    padding: theme.spacing(2),
-  },
-  register: {
-    background: 'rgb(40, 44, 52)',
-    border: '1px solid rgb(201, 209, 217)',
-    borderRadius: '6px',
-  },
-  registerHeader: {
-    padding: '8px 8px 0',
-    marginBottom: '-1px',
-    zIndex: '1'
-  },
-  registerBody: {
-    background: 'rgb(30, 34, 42)',
-    padding: theme.spacing(1),
-    borderTop: '1px solid rgb(201, 209, 217)',
-  },
-  registerFooter: {
-    background: 'rgb(30, 34, 42)',
-    padding: '0 8px 8px',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    borderRadius: '6px'
-  },
-  textArea: {
-    resize: 'vertical',
-    width: '100%',
-    minHeight: '90px',
-    padding: theme.spacing(1),
-    borderRadius: '6px',
-    lineHeight: '1.5'
-  },
-  registerButton: {
-    textTransform: 'none'
-  },
-  registerTab: {
-    padding: '8px 16px',
-    color: 'rgb(255, 255, 255)',
-    background: 'rgb(30, 34, 42)',
-    border: '1px solid rgb(201, 209, 217)',
-    borderBottom: '0',
-    borderRadius: '6px 6px 0 0',
-  }
 }))
-
-const OAuth = async () => {
-  // const appOctokit = new Octokit({
-  //   authStrategy: createOAuthAppAuth,
-  //   auth: {
-  //     clientId: 'c6f918954021d8a939f9',
-  //     clientSecret: process.env.REACT_APP_CLIENT_SECRETS
-  //   }
-  // })
-
-  // const userOctokit = await appOctokit.auth({
-  //   type: 'oauth-user',
-  //   code
-  // })
-}
-
-// OAuth()
 
 // 인증
 const octokit = new Octokit({
@@ -142,12 +69,12 @@ const getMenu = async (category) => {
   }
 }
 
-const Raffle = ({category}) => {
+const Raffle = ({authCode, match}) => {
+  const category = match.params.category
   const classes = useStyles()
 
   const [menus, setMenus] = React.useState([])
   const [raffleResult, setRaffleResult] = React.useState('')
-  const [registValue, setRegistValue] = React.useState('')
 
   React.useEffect(() => {
     getMenu(category).then(answer => {
@@ -164,101 +91,53 @@ const Raffle = ({category}) => {
     const randomNum = Math.floor(Math.random() * m_len) // 랜덤 변수
     setRaffleResult(menus[randomNum])
   }
-  // 메뉴 등록
-  const registMenu = (value) => {
-    octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
-      owner: 'wesbin',
-      repo: 'what-eat',
-      issue_number: issue_number,
-      body: value
-    })
-  }
 
   return (
     <Box>
-      {/* Top #s */}
-      <Grid container
-            className={classes.topGridContainer}
-            alignItems={'center'}
-            justify={'center'}
-      >
-        <Grid item
-              className={classes.topGridItem}
-              xs={12}
-        >
-          <Typography variant={'h2'}
-                      className={classes.whiteText}
-                      align={'left'}
-          >
-            오늘은
-          </Typography>
-          <Typography variant={'h2'}
-                      className={clsx(classes.whiteText, classes.raffleMenu)}
-                      align={'left'}
-                      onClick={(e) => {
-                        raffleMenu()
-                      }}
-          >
-            {raffleResult ? raffleResult : '이건'}
-          </Typography>
-          <Typography variant={'h2'}
-                      className={classes.whiteText}
-                      align={'left'}
-          >
-            어때요
-          </Typography>
-        </Grid>
-      </Grid>
-      {/* Top #e */}
-      {/* Middle #s */}
-      <Box  className={classes.middleBox}>
-        <Unlotted unlotted={menus}></Unlotted>
-      </Box>
-      {/* Middle #e */}
-      {/* Bottom #s */}
-      <Box className={classes.bottomBox}>
+      <Container maxWidth={'lg'}>
+        {/* Top #s */}
         <Grid container
-              className={classes.bottomGridContainer}
+              className={classes.topGridContainer}
+              alignItems={'center'}
+              justify={'center'}
         >
-          <Grid container
-                className={classes.register}
+          <Grid item
+                className={classes.topGridItem}
+                xs={12}
           >
-            <Grid container
-                  className={classes.registerHeader}
+            <Typography variant={'h2'}
+                        className={classes.whiteText}
+                        align={'left'}
             >
-              <Grid item
-                    className={classes.registerTab}
-              >
-                메뉴
-              </Grid>
-            </Grid>
-            <Grid container
-                  className={classes.registerBody}
-            >
-              <textarea className={classes.textArea}
-                        placeholder={'등록하고 싶은 메뉴를 적어주세요.'}
-                        onChange={(e) => {
-                          setRegistValue(e.target.value)
+              오늘은
+            </Typography>
+            <Typography variant={'h2'}
+                        className={clsx(classes.whiteText, classes.raffleMenu)}
+                        align={'left'}
+                        onClick={(e) => {
+                          raffleMenu()
                         }}
-              />
-            </Grid>
-            <Grid container
-                  className={classes.registerFooter}
             >
-              <Button variant={'contained'}
-                      size={'small'}
-                      className={classes.registerButton}
-                      onClick={(e) => {
-                        registMenu(registValue)
-                      }}
-              >
-                등록
-              </Button>
-            </Grid>
+              {raffleResult ? raffleResult : '이건'}
+            </Typography>
+            <Typography variant={'h2'}
+                        className={classes.whiteText}
+                        align={'left'}
+            >
+              어때요
+            </Typography>
           </Grid>
         </Grid>
-      </Box>
-      {/* Bottom #e */}
+        {/* Top #e */}
+        {/* Middle #s */}
+        <Box  className={classes.middleBox}>
+          <Unlotted unlotted={menus}></Unlotted>
+        </Box>
+        {/* Middle #e */}
+        {/* Bottom #s */}
+        <Regist authCode={authCode}/>
+        {/* Bottom #e */}
+      </Container>
     </Box>
   )
 }

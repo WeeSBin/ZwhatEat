@@ -1,10 +1,10 @@
 import './App.css';
 import {Box, Container} from "@material-ui/core";
-import {useState} from "react"
+import React, {useState} from "react"
 import Main from "./components/Main/Main"
-import Raffle from "./components/Raffle/Raffle"
+// import Raffle from "./components/Raffle/Raffle"
 
-const App = () => {
+const App = ({authCode, history}) => {
   // 활성화, 비활성화 토글 변수
   const [category, setCategory] = useState(
     {
@@ -32,16 +32,18 @@ const App = () => {
     }
   }
 
+  React.useEffect(() => {
+    if (chkCategory()) {
+      history.push('/raffle/china')
+    } 
+  })
+
   return (
     <div className="App">
       <Box>
         <Container maxWidth={`lg`}>
-          {
-            chkCategory() ? 
-            <Main category={category} handleClick={handleClick}></Main>
-            :
-            <Raffle category={'china'}/>
-          }
+          <Main category={category} handleClick={handleClick}></Main>
+          {/* <Raffle category={'china'} authCode={authCode}/> */}
         </Container>
       </Box>
     </div>
