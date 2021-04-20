@@ -70,12 +70,11 @@ const getMenu = async (category) => {
 }
 
 const Raffle = ({authCode, match}) => {
-  const category = match.params.category
-  const classes = useStyles()
-
-  const [menus, setMenus] = React.useState([])
-  const [raffleResult, setRaffleResult] = React.useState('')
-
+  const [menus, setMenus] = React.useState([]) // Git에서 불러온 전체 메뉴
+  const [raffleResult, setRaffleResult] = React.useState('') // 메뉴 추첨 결과
+  const category = match.params.category // 선택한 category
+  const classes = useStyles() // css
+  // Git에서 메뉴 불러와 세팅
   React.useEffect(() => {
     getMenu(category).then(answer => {
       if (answer === 0) {

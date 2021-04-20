@@ -20,3 +20,7 @@ code {
   width: 0px;
   background: transparent; /* make scrollbar transparent */
 }
+
+a {
+  text-decoration: none;
+}

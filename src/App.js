@@ -2,9 +2,8 @@ import './App.css';
 import {Box, Container} from "@material-ui/core";
 import React, {useState} from "react"
 import Main from "./components/Main/Main"
-// import Raffle from "./components/Raffle/Raffle"
 
-const App = ({authCode, history}) => {
+const App = ({history, SetRaffle}) => {
   // 활성화, 비활성화 토글 변수
   const [category, setCategory] = useState(
     {
@@ -33,6 +32,7 @@ const App = ({authCode, history}) => {
   }
 
   React.useEffect(() => {
+    SetRaffle('china')
     if (chkCategory()) {
       history.push('/raffle/china')
     } 
@@ -43,7 +43,6 @@ const App = ({authCode, history}) => {
       <Box>
         <Container maxWidth={`lg`}>
           <Main category={category} handleClick={handleClick}></Main>
-          {/* <Raffle category={'china'} authCode={authCode}/> */}
         </Container>
       </Box>
     </div>

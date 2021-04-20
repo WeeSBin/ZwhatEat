@@ -1,36 +1,21 @@
 import React from 'react'
 import queryString from 'query-string'
 import {Link} from  'react-router-dom'
-// import { createOAuthAppAuth, createOAuthUserAuth } from "@octokit/auth-oauth-app";
 
-// const OAuth = async () => {
-//   const appOctokit = new Octokit({
-//     authStrategy: createOAuthAppAuth,
-//     auth: {
-//       clientId: 'c6f918954021d8a939f9',
-//       clientSecret: process.env.REACT_APP_CLIENT_SECRETS
-//     }
-//   })
-
-
-
-//   const userOctokit = await appOctokit.auth({
-//     type: 'oauth-user',
-//     code
-//   })
-// }
-
-const login = ({history, location, match, setAuthCode}) => {
+const Login = ({history, location, match, setAuthCode, raffle}) => {
   const query = queryString.parse(location.search) // URL 파싱
 
-  console.log(query)
+  React.useEffect(() => {
+    setAuthCode(query.code)
+  })
 
-  // setAuthCode(query.code)
-  // history.goBack()
+  if (raffle !== '') {
+    history.push('/raffle/' + raffle)
+  }
 
   return (
-    <Link to={'/'}>{query.code}</Link>
+    <Link to={'/'}>죄송합니다. GitHub 로그인 중에 에러가 발생했습니다. 클릭하시면 첫 화면으로 돌아갑니다.</Link>
   )
 }
 
-export default login
+export default Login
