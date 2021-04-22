@@ -1,7 +1,6 @@
 import React from 'react'
 import {Grid, makeStyles, Box, Typography, Container} from "@material-ui/core"
 import Unlotted from './Unlotted'
-import {Octokit} from "@octokit/core"
 
 import clsx from "clsx"
 
@@ -31,42 +30,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-// 인증
-const octokit = new Octokit({
-  auth: process.env.REACT_APP_AUTH
-})
 // 현재 타겟이 되는 이슈의 번호
 let issue_number = 0
-// 메뉴 가져오기
 const getMenu = async (category) => {
+  const answer = [] // 메뉴 이름들
   // 이슈 가져오기
-  const issueList = await octokit.request('GET /repos/{owner}/{repo}/issues', {
-    owner: 'wesbin',
-    repo: 'what-eat'
-  })
-  // 현재 카테고리에 맞는 이슈의 번호 찾기
-  const i_len = issueList.data.length
-  for (let i = 0; i < i_len; i++) {
-    const issue = issueList.data[i]
-    if (issue.title === category) {
-      issue_number = issue.number
-    }
-  }
-  // 이슈 번호를 이용하여 코멘트 가져오기
-  if (issue_number === 0) {
-    return 0
-  } else {
-    const comments = await octokit.request("GET /repos/{owner}/{repo}/issues/{issue_number}/comments", {
-      owner: 'wesbin',
-      repo: 'what-eat',
-      issue_number: issue_number
+  await fetch('https://api.github.com/repos/wesbin/what-eat/issues')
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      }
     })
-    // 메뉴 이름 추출
-    const answer = []
-    comments.data.forEach(menu => answer.push(menu.body))
+    .then(issueList => {
+      // 현재 카테고리에 맞는 이슈 번호 찾기
+      const i_len = issueList.length
+      for (let i = 0; i < i_len; i++) {
+        const issue = issueList[i]
+        if (issue.title === category) {
+          issue_number = issue.number
+        }
+      }
+    })
+  // 이슈 번호를 사용하여 코멘트 불러오기
+  if (issue_number === 0) return 0
+  await fetch(`https://api.github.com/repos/wesbin/what-eat/issues/${issue_number}/comments`)
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      }
+    })
+    .then(comments => {
+      // 메뉴 이름 추출
+      comments.forEach(menu => answer.push(menu.body))
+    })
 
-    return answer
-  }
+  return answer
 }
 
 const Raffle = ({authCode, match}) => {

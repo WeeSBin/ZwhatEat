@@ -9,7 +9,7 @@ const Login = ({history, location, match, setAuthCode, raffle}) => {
     setAuthCode(query.code)
   })
 
-  if (raffle !== '') {
+  if (raffle) {
     history.push('/raffle/' + raffle)
   }
 

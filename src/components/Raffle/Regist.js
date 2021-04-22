@@ -1,8 +1,5 @@
 import React from 'react'
 import {Grid, makeStyles, Box, Button} from "@material-ui/core"
-import {Octokit} from "@octokit/core"
-import {v4 as uuidv4} from 'uuid'
-import {createOAuthAppAuth} from  '@octokit/auth-oauth-app'
 
 const useStyles = makeStyles((theme) => ({
   bottomBox: {
@@ -61,53 +58,48 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const authUser = async (code, state) => {
-  const auth = createOAuthAppAuth({
-    clientType: 'oauth-app',
-    clientId: process.env.REACT_APP_CLIENT_ID,
-    clientSecret: process.env.REACT_APP_CLIENT_SECRET
+const getToken = async (code) => {
+  await fetch('https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', {
+    method: 'POST',
+    heders: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      client_secret: process.env.REACT_APP_CLIENT_SECRETS,
+      code: code,
+      state: process.env.REACT_APP_STATE
+    })
   })
-
-  const userAutentication = await auth({
-    type: 'oauth-user',
-    code: code,
-    state: state
-  })
-
-  // console.log(userAutentication)
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      }
+    })
+    .then(json => console.log(json))
 }
-
-// 인증
-const octokit = new Octokit({
-  auth: process.env.REACT_APP_AUTH
-})
-
-let issue_number = 0 // 현재 타겟이 되는 이슈의 번호
-const state = uuidv4() // random String
 
 const Regist = ({authCode}) => {
   const [registValue, setRegistValue] = React.useState('') // 메뉴 등록 value
   const classes = useStyles() // css
   // code 발급 경로
-  const url = new URL('https://github.com/login/oauth/authorize')
-  const params = {
-    client_id: process.env.REACT_APP_CLIENT_ID,
-    state: state
-  }
-  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-  // 메뉴 등록
-  const registMenu = (value) => {
-    octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
-      owner: 'wesbin',
-      repo: 'what-eat',
-      issue_number: issue_number,
-      body: value
-    })
+  const url = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&state=${process.env.REACT_APP_STATE}`
+
+  if (authCode) {
+    getToken(authCode)
   }
 
-  if (authCode !== '') {
-    authUser(authCode, state)
-  }
+  // 메뉴 등록
+  // const registMenu = (value) => {
+  //   octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+  //     owner: 'wesbin',
+  //     repo: 'what-eat',
+  //     issue_number: issue_number,
+  //     body: value
+  //   })
+  // }
 
   return (
     <Box className={classes.bottomBox}>
@@ -145,12 +137,12 @@ const Regist = ({authCode}) => {
                 className={classes.registerFooter}
                 >
             {
-              authCode !== '' ?
+              authCode ?
               <Button variant={'contained'}
               size={'small'}
               className={classes.registerButton}
               onClick={(e) => {
-                registMenu(registValue)
+
               }}
               >
                 등록
