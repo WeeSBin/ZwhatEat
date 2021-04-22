@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const areEqual = (prevProps, nextProps) => {
-  return prevProps.category[prevProps.name] === nextProps.category[nextProps.name];
+  return prevProps.category[prevProps.name] === nextProps.category[nextProps.name]
 }
 
 const Category = ({category, onClick, name}) => {

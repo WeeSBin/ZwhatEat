@@ -1,0 +1,8 @@
+{
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.deploySubpath": ".",
+  "appService.defaultWebAppToDeploy": "/subscriptions/1d63ee6f-7aed-48be-9476-6ace224a05ee/resourceGroups/default/providers/Microsoft.Web/sites/what-eat-gate"
+}

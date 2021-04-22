@@ -58,27 +58,34 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const areEqual = (prevProps, nextProps) => {
+  return prevProps.authCode === nextProps.authCode
+}
+
 const getToken = async (code) => {
-  await fetch('https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', {
-    method: 'POST',
-    heders: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest'
-    },
-    body: JSON.stringify({
-      client_id: process.env.REACT_APP_CLIENT_ID,
-      client_secret: process.env.REACT_APP_CLIENT_SECRETS,
-      code: code,
-      state: process.env.REACT_APP_STATE
-    })
-  })
+  await fetch(`https://what-eat-gate.azurewebsites.net/authenticate/${code}`)
     .then(response => {
       if (response.ok) {
         return response.json()
       }
     })
-    .then(json => console.log(json))
+    .then(json => {
+      if (json.hasOwnProperty('token')) {
+        console.log(json)
+      }
+    })
+}
+
+const getCode = async () => {
+  await fetch(`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&state=${process.env.REACT_APP_STATE}`)
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      }
+    })
+    .then(json => {
+      console.log(json)
+    })
 }
 
 const Regist = ({authCode}) => {
@@ -86,6 +93,8 @@ const Regist = ({authCode}) => {
   const classes = useStyles() // css
   // code 발급 경로
   const url = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&state=${process.env.REACT_APP_STATE}`
+
+  getCode()
 
   if (authCode) {
     getToken(authCode)
@@ -162,4 +171,4 @@ const Regist = ({authCode}) => {
   )
 }
 
-export default Regist
+export default React.memo(Regist, areEqual)
