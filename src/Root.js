@@ -10,7 +10,7 @@ const Root = () => {
   const [raffle, SetRaffle] = React.useState('china')
 
   return (
-    <BrowserRouter basename={'/'}>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route  exact path="/" 
                 render={(props) => <App SetRaffle={SetRaffle} {...props}/>}/>

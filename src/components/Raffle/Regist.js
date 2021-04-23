@@ -79,12 +79,13 @@ const getToken = async (code) => {
 
 const Regist = ({authCode}) => {
   const [registValue, setRegistValue] = React.useState('') // 메뉴 등록 value
+  const [token, setToken] = React.useState('') // OAuth token
   const classes = useStyles() // css
   // code 발급 경로
   const url = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&state=${process.env.REACT_APP_STATE}`
 
   if (authCode) {
-    getToken(authCode)
+    setToken(getToken(authCode))
   }
 
   // 메뉴 등록
