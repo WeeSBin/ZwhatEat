@@ -6,7 +6,7 @@ import Raffle from './components/Raffle/Raffle'
 
 const Root = () => {
 
-  const [authCode, setAuthCode] = React.useState('')
+  const [token, setToken] = React.useState('')
   const [raffle, SetRaffle] = React.useState('china')
 
   return (
@@ -15,9 +15,9 @@ const Root = () => {
         <Route  exact path="/" 
                 render={(props) => <App SetRaffle={SetRaffle} {...props}/>}/>
         <Route  path="/login" 
-                render={(props) => <Login raffle={raffle} setAuthCode={setAuthCode} {...props}/>}/>
+                render={(props) => <Login raffle={raffle} setToken={setToken} {...props}/>}/>
         <Route  path="/raffle/:category"
-                render={(props) => <Raffle authCode={authCode} {...props}/>}/>
+                render={(props) => <Raffle token={token} {...props}/>}/>
       </Switch>
     </BrowserRouter>
   )

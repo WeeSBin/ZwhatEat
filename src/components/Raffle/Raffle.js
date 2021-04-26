@@ -67,7 +67,7 @@ const getMenu = async (category) => {
   return answer
 }
 
-const Raffle = ({authCode, match}) => {
+const Raffle = ({token, match}) => {
   const [menus, setMenus] = React.useState([]) // Git에서 불러온 전체 메뉴
   const [raffleResult, setRaffleResult] = React.useState('') // 메뉴 추첨 결과
   const category = match.params.category // 선택한 category
@@ -132,7 +132,7 @@ const Raffle = ({authCode, match}) => {
         </Box>
         {/* Middle #e */}
         {/* Bottom #s */}
-        <Regist authCode={authCode}/>
+        <Regist token={token} issueNumber={issue_number}/>
         {/* Bottom #e */}
       </Container>
     </Box>

@@ -58,45 +58,42 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const areEqual = (prevProps, nextProps) => {
-  return prevProps.authCode === nextProps.authCode
-}
-
-const getToken = async (code) => {
-  // await fetch(`http://localhost:9999/access_token/${code}/${process.env.REACT_APP_STATE}`)
-  await fetch(`https://github-proxy.azurewebsites.net/access_token/${code}/${process.env.REACT_APP_STATE}`)
-    .then(response => {
-      if (response.ok) {
-        return response.json()
-      }
-    })
-    .then(json => {
-      if (json.hasOwnProperty('access_token')) {
-        console.log(json)
-      }
-    })
-}
-
-const Regist = ({authCode}) => {
+const Regist = ({token, issueNumber}) => {
   const [registValue, setRegistValue] = React.useState('') // 메뉴 등록 value
-  const [token, setToken] = React.useState('') // OAuth token
   const classes = useStyles() // css
   // code 발급 경로
-  const url = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&state=${process.env.REACT_APP_STATE}`
+  const url = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&state=${process.env.REACT_APP_STATE}&scope=repo`
 
-  if (authCode) {
-    setToken(getToken(authCode))
+  if (token) {
+    console.log(token)
   }
 
   // 메뉴 등록
-  // const registMenu = (value) => {
-  //   octokit.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
-  //     owner: 'wesbin',
-  //     repo: 'what-eat',
-  //     issue_number: issue_number,
-  //     body: value
-  //   })
-  // }
+  const registMenu = (value) => {
+    fetch(`https://api.github.com/repos/wesbin/what-eat/issues/${issueNumber}/comments`, {
+      method: 'POST',
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: 'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify({
+        body: registValue
+      })
+    })
+
+    // fetch(`http://localhost:9999/issue`, {
+    //   method: 'POST',
+    //   headers: {
+    //     Authorization: `token ${token}`,
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     menu: registValue,
+    //     issueNumber: issueNumber
+    //   })
+    // })
+
+  }
 
   return (
     <Box className={classes.bottomBox}>
@@ -134,12 +131,12 @@ const Regist = ({authCode}) => {
                 className={classes.registerFooter}
                 >
             {
-              authCode ?
+              token ?
               <Button variant={'contained'}
               size={'small'}
               className={classes.registerButton}
               onClick={(e) => {
-
+                registMenu(e.target.value)
               }}
               >
                 등록
@@ -159,4 +156,4 @@ const Regist = ({authCode}) => {
   )
 }
 
-export default React.memo(Regist, areEqual)
+export default Regist
