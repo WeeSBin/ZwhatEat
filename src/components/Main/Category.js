@@ -25,7 +25,7 @@ const Category = ({category, onClick, name}) => {
   // category 이름 번역
   const transCategory = (key) => {
     switch (key) {
-      case 'korean':
+      case 'korea':
         return '한식'
       case 'western':
         return '양식'

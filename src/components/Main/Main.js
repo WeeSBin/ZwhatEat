@@ -7,7 +7,7 @@ const Main = ({category, handleClick}) => {
     <Grid container
           direction={`column`}
     >
-      <Category category={category} name={`korean`} onClick={handleClick} />
+      <Category category={category} name={`korea`} onClick={handleClick} />
       <Category category={category} name={`western`} onClick={handleClick} />
       <Category category={category} name={`china`} onClick={handleClick} />
       <Category category={category} name={`japan`} onClick={handleClick} />

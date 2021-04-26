@@ -34,23 +34,14 @@ const useStyles = makeStyles((theme) => ({
 let issue_number = 0
 const getMenu = async (category) => {
   const answer = [] // 메뉴 이름들
-  // 이슈 가져오기
-  await fetch('https://api.github.com/repos/wesbin/what-eat/issues')
-    .then(response => {
-      if (response.ok) {
-        return response.json()
-      }
-    })
-    .then(issueList => {
-      // 현재 카테고리에 맞는 이슈 번호 찾기
-      const i_len = issueList.length
-      for (let i = 0; i < i_len; i++) {
-        const issue = issueList[i]
-        if (issue.title === category) {
-          issue_number = issue.number
-        }
-      }
-    })
+  const categoryNum = {
+    'korea': 1,
+    'china': 2,
+    'western': 3,
+    'japan': 4,
+    'snack': 5
+  }
+  issue_number = categoryNum[category]
   // 이슈 번호를 사용하여 코멘트 불러오기
   if (issue_number === 0) return 0
   await fetch(`https://api.github.com/repos/wesbin/what-eat/issues/${issue_number}/comments`)

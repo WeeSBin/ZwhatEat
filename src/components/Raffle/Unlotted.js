@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     height: '100%',
     padding: theme.spacing(2),
+    maxHeight: '58px'
   }
 }))
 

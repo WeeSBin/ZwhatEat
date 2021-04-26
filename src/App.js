@@ -7,7 +7,7 @@ const App = ({history, SetRaffle}) => {
   // 활성화, 비활성화 토글 변수
   const [category, setCategory] = useState(
     {
-      korean: true,
+      korea: true,
       western: true,
       china: true,
       japan: true,
@@ -20,22 +20,25 @@ const App = ({history, SetRaffle}) => {
   }
   // 활성화된 category가 한개면 true
   const chkCategory = () => {
-    let cnt = 0;
-    for (const key in category) {
-      if (category[key]) cnt++
+    let raffle = ''
+    for (const [key, value] of Object.entries(category)) {
+      if (value) {
+        if (raffle !== '') {
+          return false
+        } else {
+          raffle = key
+        }
+      }
     }
-    if (cnt > 1) {
-      return false
-    } else {
-      return true
-    }
+    return raffle
   }
 
   React.useEffect(() => {
-    SetRaffle('china')
-    if (chkCategory()) {
-      history.push('/raffle/china')
-    } 
+    const key = chkCategory()
+    if (key) {
+      SetRaffle(key)
+      history.push(`/raffle/${key}`)
+    }
   })
 
   return (

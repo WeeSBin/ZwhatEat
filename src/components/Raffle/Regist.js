@@ -62,7 +62,7 @@ const Regist = ({token, issueNumber}) => {
   const [registValue, setRegistValue] = React.useState('') // 메뉴 등록 value
   const classes = useStyles() // css
   // code 발급 경로
-  const url = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&state=${process.env.REACT_APP_STATE}&scope=repo`
+  const url = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&state=${process.env.REACT_APP_STATE}&scope=public_repo`
 
   if (token) {
     console.log(token)
@@ -80,19 +80,6 @@ const Regist = ({token, issueNumber}) => {
         body: registValue
       })
     })
-
-    // fetch(`http://localhost:9999/issue`, {
-    //   method: 'POST',
-    //   headers: {
-    //     Authorization: `token ${token}`,
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     menu: registValue,
-    //     issueNumber: issueNumber
-    //   })
-    // })
-
   }
 
   return (
