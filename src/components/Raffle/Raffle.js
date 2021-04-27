@@ -72,12 +72,26 @@ const Raffle = ({token, match}) => {
         setMenus(answer)
       }
     })
-  }, [])
+  }, [category])
   // 메뉴 추첨
   const raffleMenu = () => {
     const m_len = menus.length
-    const randomNum = Math.floor(Math.random() * m_len) // 랜덤 변수
-    setRaffleResult(menus[randomNum])
+    if (m_len < 1) {
+      alert('메뉴들이 도착하고 있어요!')
+    } else {
+      const randomNum = Math.floor(Math.random() * m_len) // 랜덤 변수
+      setRaffleResult(menus[randomNum])
+    }
+  }
+  // 메뉴 등록 후 업데이트
+  const updateMenu = () => {
+    getMenu(category).then(answer => {
+      if (answer === 0) {
+        alert('Error')
+      } else {
+        setMenus(answer)
+      }
+    })
   }
 
   return (
@@ -123,7 +137,7 @@ const Raffle = ({token, match}) => {
         </Box>
         {/* Middle #e */}
         {/* Bottom #s */}
-        <Regist token={token} issueNumber={issue_number}/>
+        <Regist token={token} issueNumber={issue_number} category={category} updateMenu={updateMenu}/>
         {/* Bottom #e */}
       </Container>
     </Box>

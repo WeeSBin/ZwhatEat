@@ -58,18 +58,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Regist = ({token, issueNumber}) => {
+const Regist = ({token, issueNumber, category, updateMenu}) => {
   const [registValue, setRegistValue] = React.useState('') // 메뉴 등록 value
   const classes = useStyles() // css
-  // code 발급 경로
-  const url = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&state=${process.env.REACT_APP_STATE}&scope=public_repo`
-
-  if (token) {
-    console.log(token)
-  }
-
+  // code 발급 경로 url 설정
+  const params = [
+    `client_id=${process.env.REACT_APP_CLIENT_ID}`,
+    `state=${process.env.REACT_APP_STATE}`,
+    `scope=public_repo`,
+    `redirect_uri=https://wesbin.github.io/what-eat/login/${category}`
+  ]
+  const url = 'https://github.com/login/oauth/authorize?' + params.join('&')
   // 메뉴 등록
-  const registMenu = (value) => {
+  const registMenu = () => {
     fetch(`https://api.github.com/repos/wesbin/what-eat/issues/${issueNumber}/comments`, {
       method: 'POST',
       headers: {
@@ -80,6 +81,17 @@ const Regist = ({token, issueNumber}) => {
         body: registValue
       })
     })
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+      })
+      .then((json) => {
+        alert(`${registValue} 등록 했습니다. 화면에 보이는건 느릴 수 있어요.`)
+        setRegistValue('')
+        updateMenu()
+      })
+      .catch((e) => console.log(e))
   }
 
   return (
@@ -110,6 +122,7 @@ const Regist = ({token, issueNumber}) => {
                       onChange={(e) => {
                         setRegistValue(e.target.value)
                       }}
+                      value={registValue}
                       />
           </Grid>
           {/* Body #s */}
@@ -122,9 +135,7 @@ const Regist = ({token, issueNumber}) => {
               <Button variant={'contained'}
               size={'small'}
               className={classes.registerButton}
-              onClick={(e) => {
-                registMenu(e.target.value)
-              }}
+              onClick={registMenu}
               >
                 등록
               </Button>

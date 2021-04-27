@@ -36,7 +36,6 @@ const App = ({history, SetRaffle}) => {
   React.useEffect(() => {
     const key = chkCategory()
     if (key) {
-      SetRaffle(key)
       history.push(`/raffle/${key}`)
     }
   })

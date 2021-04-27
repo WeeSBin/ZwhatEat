@@ -7,15 +7,14 @@ import Raffle from './components/Raffle/Raffle'
 const Root = () => {
 
   const [token, setToken] = React.useState('')
-  const [raffle, SetRaffle] = React.useState('china')
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route  exact path="/" 
-                render={(props) => <App SetRaffle={SetRaffle} {...props}/>}/>
-        <Route  path="/login" 
-                render={(props) => <Login raffle={raffle} setToken={setToken} {...props}/>}/>
+                render={(props) => <App {...props}/>}/>
+        <Route  path="/login/:category" 
+                render={(props) => <Login setToken={setToken} {...props}/>}/>
         <Route  path="/raffle/:category"
                 render={(props) => <Raffle token={token} {...props}/>}/>
       </Switch>
