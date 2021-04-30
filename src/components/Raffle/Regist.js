@@ -66,7 +66,7 @@ const Regist = ({token, issueNumber, category, updateMenu}) => {
     `client_id=${process.env.REACT_APP_CLIENT_ID}`,
     `state=${process.env.REACT_APP_STATE}`,
     `scope=public_repo`,
-    `redirect_uri=https://wesbin.github.io/what-eat/login/${category}`
+    `redirect_uri=${process.env.REACT_APP_REDIRECT}/what-eat/login/${category}`
   ]
   const url = 'https://github.com/login/oauth/authorize?' + params.join('&')
   // 메뉴 등록
@@ -87,7 +87,7 @@ const Regist = ({token, issueNumber, category, updateMenu}) => {
         }
       })
       .then((json) => {
-        alert(`${registValue} 등록 했습니다. 화면에 보이는건 느릴 수 있어요.`)
+        alert(`'${registValue}' 메뉴가 등록 중입니다. 화면에 보이는건 느릴 수 있어요.`)
         setRegistValue('')
         updateMenu()
       })

@@ -24,8 +24,7 @@ const Login = ({history, location, match, setToken}) => {
   const category = match.params.category // 선택한 category
 
   const getToken = async (code) => {
-    // await fetch(`http://localhost:9999/access_token/${code}/${process.env.REACT_APP_STATE}`)
-    await fetch(`https://github-proxy.azurewebsites.net/access_token/${code}/${process.env.REACT_APP_STATE}`)
+    await fetch(`${process.env.REACT_APP_PROXY}/access_token/${code}/${process.env.REACT_APP_STATE}`)
       .then(response => {
         if (response.ok) {
           return response.json()

@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgb(255, 255, 255)',
   },
   raffleMenu: {
-    background: 'rgb(40, 44, 52)'
+    background: 'rgb(40, 44, 52)',
+    cursor: 'pointer'
   },
   middleBox: {
     height: '35vh',
