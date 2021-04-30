@@ -7,6 +7,9 @@ import clsx from "clsx"
 import Regist from './Regist'
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: 0
+  },
   topGridContainer: {
     height: '40vh',
     background: 'rgb(30, 34, 42)',
@@ -14,9 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   topGridItem: {
     height: '100%',
-    padding: theme.spacing(8)
-  },
-  whiteText: {
+    padding: theme.spacing(8),
     color: 'rgb(255, 255, 255)',
   },
   raffleMenu: {
@@ -97,7 +98,9 @@ const Raffle = ({token, match}) => {
 
   return (
     <Box>
-      <Container maxWidth={'lg'}>
+      <Container  maxWidth={'lg'}
+                  className={classes.container}
+      >
         {/* Top #s */}
         <Grid container
               className={classes.topGridContainer}
@@ -109,13 +112,12 @@ const Raffle = ({token, match}) => {
                 xs={12}
           >
             <Typography variant={'h2'}
-                        className={classes.whiteText}
                         align={'left'}
             >
               오늘은
             </Typography>
             <Typography variant={'h2'}
-                        className={clsx(classes.whiteText, classes.raffleMenu)}
+                        className={classes.raffleMenu}
                         align={'left'}
                         onClick={(e) => {
                           raffleMenu()
@@ -124,7 +126,6 @@ const Raffle = ({token, match}) => {
               {raffleResult ? raffleResult : '이건'}
             </Typography>
             <Typography variant={'h2'}
-                        className={classes.whiteText}
                         align={'left'}
             >
               어때요

@@ -1,7 +1,13 @@
 import './App.css';
-import {Box, Container} from "@material-ui/core";
+import {Box, Container, makeStyles} from "@material-ui/core";
 import React, {useState} from "react"
 import Main from "./components/Main/Main"
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: 0
+  },
+}))
 
 // proxy 서버 켜기
 fetch(`${process.env.REACT_APP_PROXY}/state/check`)
@@ -12,6 +18,7 @@ fetch(`${process.env.REACT_APP_PROXY}/state/check`)
   })
 
 const App = ({history, SetRaffle}) => {
+  const classes = useStyles() // CSS
   // 활성화, 비활성화 토글 변수
   const [category, setCategory] = useState(
     {
@@ -51,7 +58,9 @@ const App = ({history, SetRaffle}) => {
   return (
     <div className="App">
       <Box>
-        <Container maxWidth={`lg`}>
+        <Container  maxWidth={`lg`}
+                    className={classes.container}
+        >
           <Main category={category} handleClick={handleClick}></Main>
         </Container>
       </Box>
