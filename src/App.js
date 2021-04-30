@@ -3,6 +3,14 @@ import {Box, Container} from "@material-ui/core";
 import React, {useState} from "react"
 import Main from "./components/Main/Main"
 
+// proxy 서버 켜기
+fetch(`${process.env.REACT_APP_PROXY}/state/check`)
+  .then(response => {
+    if (!response.ok) {
+      console.log('proxy, on') 
+    }
+  })
+
 const App = ({history, SetRaffle}) => {
   // 활성화, 비활성화 토글 변수
   const [category, setCategory] = useState(
