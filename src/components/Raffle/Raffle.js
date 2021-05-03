@@ -2,8 +2,6 @@ import React from 'react'
 import {Grid, makeStyles, Box, Typography, Container} from "@material-ui/core"
 import Unlotted from './Unlotted'
 
-import clsx from "clsx"
-
 import Regist from './Regist'
 
 const useStyles = makeStyles((theme) => ({
@@ -11,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0
   },
   topGridContainer: {
-    height: '40vh',
+    height: '390px',
     background: 'rgb(30, 34, 42)',
     padding: theme.spacing(2)
   },
@@ -25,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   middleBox: {
-    height: '35vh',
+    height: '341.25px',
     background: 'rgb(30, 34, 42)',
     borderTop: '1px solid rgb(201, 209, 217)',
     overflow: 'scroll',

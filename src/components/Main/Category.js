@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     height: `20vh`,
     background: 'rgb(30, 34, 42)',
+    minHeight: '100px'
     // 'background-image': "url('/images/korean.jpg')"
   },
   disable: {
@@ -41,7 +42,9 @@ const Category = ({category, onClick, name}) => {
   }
 
   return (
-    <Grid item
+    <Grid container
+          justify={"center"}
+          direction={`column`}
           className={clsx(classes.grid,{
             [classes.disable]: !category[name]
           })}

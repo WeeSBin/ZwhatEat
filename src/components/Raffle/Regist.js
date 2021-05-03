@@ -3,7 +3,7 @@ import {Grid, makeStyles, Box, Button} from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   bottomBox: {
-    height: '25vh',
+    height: '243.75px',
     background: 'rgb(30, 34, 42)',
     borderTop: '1px solid rgb(201, 209, 217)',
   },
