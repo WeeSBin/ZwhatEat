@@ -6,7 +6,9 @@ import Regist from './Regist'
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    padding: 0
+    padding: 0,
+    background: 'rgb(30, 34, 42)',
+    height: '100vh'
   },
   topGridContainer: {
     height: '390px',
