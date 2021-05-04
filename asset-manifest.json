@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/what-eat/static/css/main.e920abfc.chunk.css",
-    "main.js": "/what-eat/static/js/main.0373df39.chunk.js",
-    "main.js.map": "/what-eat/static/js/main.0373df39.chunk.js.map",
+    "main.css": "/what-eat/static/css/main.68214c0c.chunk.css",
+    "main.js": "/what-eat/static/js/main.944b3a1e.chunk.js",
+    "main.js.map": "/what-eat/static/js/main.944b3a1e.chunk.js.map",
     "runtime-main.js": "/what-eat/static/js/runtime-main.29fe9115.js",
     "runtime-main.js.map": "/what-eat/static/js/runtime-main.29fe9115.js.map",
     "static/js/2.47c25815.chunk.js": "/what-eat/static/js/2.47c25815.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.664242f3.chunk.js": "/what-eat/static/js/3.664242f3.chunk.js",
     "static/js/3.664242f3.chunk.js.map": "/what-eat/static/js/3.664242f3.chunk.js.map",
     "index.html": "/what-eat/index.html",
-    "static/css/main.e920abfc.chunk.css.map": "/what-eat/static/css/main.e920abfc.chunk.css.map",
+    "static/css/main.68214c0c.chunk.css.map": "/what-eat/static/css/main.68214c0c.chunk.css.map",
     "static/js/2.47c25815.chunk.js.LICENSE.txt": "/what-eat/static/js/2.47c25815.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.29fe9115.js",
     "static/js/2.47c25815.chunk.js",
-    "static/css/main.e920abfc.chunk.css",
-    "static/js/main.0373df39.chunk.js"
+    "static/css/main.68214c0c.chunk.css",
+    "static/js/main.944b3a1e.chunk.js"
   ]
 }
